@@ -13,7 +13,7 @@ def count_url_access(method):
     """ Decorator counting how many times
     a URL is accessed """
     @wraps(method)
-    def wrapper(url):
+    def invoker(url):
         cached_key = "cached:" + url
         cached_data = store.get(cached_key)
         if cached_data:
@@ -26,7 +26,7 @@ def count_url_access(method):
         store.set(cached_key, html)
         store.expire(cached_key, 10)
         return html
-    return wrapper
+    return invoker
 
 
 @count_url_access
